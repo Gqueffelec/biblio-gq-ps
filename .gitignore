@@ -25,7 +25,6 @@ hs_err_pid*
 *.properties
 *.log
 *.txt
-*.sql
 *.settings
 *.project
 *.classpath
