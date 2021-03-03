@@ -8,18 +8,18 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import biblio.model.Categorie;
+import biblio.model.Livre;
 
-public class CategorieController implements IController<Categorie> {
+public class LivreController implements IController<Livre> {
 
 	private SessionFactory sessionFactory;
 
-	public CategorieController() {
+	public LivreController() {
 		sessionFactory = HibernateController.getSessionFactory();
 	}
 
 	@Override
-	public Categorie create(Categorie o) {
+	public Livre create(Livre o) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -42,7 +42,7 @@ public class CategorieController implements IController<Categorie> {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			Categorie o = session.get(Categorie.class, id);
+			Livre o = session.get(Livre.class, id);
 			session.delete(o);
 			transaction.commit();
 		} catch (Exception e) {
@@ -55,17 +55,20 @@ public class CategorieController implements IController<Categorie> {
 	}
 
 	@Override
-	public boolean update(Categorie o) {
+	public boolean update(Livre o) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			Categorie temp = session.get(Categorie.class, o.getId());
-			temp.setNom(o.getNom());
+			Livre temp = session.get(Livre.class, o.getId());
+			temp.setDate_edition(o.getDate_edition());
+			temp.setId_categorie(o.getId_categorie());
 			temp.setLabel(o.getLabel());
-			temp.setInformation_technique(o.getInformation_technique());
+			temp.setPrix(o.getPrix());
+			temp.setStock(o.getStock());
+			temp.setTitre(o.getTitre());
+			System.err.println(temp);
 			session.persist(temp);
-			System.out.println(o.getId());
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
@@ -77,13 +80,13 @@ public class CategorieController implements IController<Categorie> {
 	}
 
 	@Override
-	public Categorie getById(int id) {
+	public Livre getById(int id) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
-		Categorie o = null;
+		Livre o = null;
 		try {
 			transaction = session.beginTransaction();
-			o = session.get(Categorie.class, id);
+			o = session.get(Livre.class, id);
 			System.out.println(o);
 			transaction.commit();
 		} catch (Exception e) {
@@ -95,18 +98,19 @@ public class CategorieController implements IController<Categorie> {
 	}
 
 	@Override
-	public List<Categorie> getAll() {
+	public List<Livre> getAll() {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
-		List<Categorie> liste = null;
+		List<Livre> liste = null;
 		try {
 			transaction = session.beginTransaction();
-			CriteriaQuery<Categorie> criteria = session.getCriteriaBuilder().createQuery(Categorie.class);
-			criteria.from(Categorie.class);
+			CriteriaQuery<Livre> criteria = session.getCriteriaBuilder().createQuery(Livre.class);
+			criteria.from(Livre.class);
 			liste = session.createQuery(criteria).getResultList();
 			liste.stream().forEach(System.out::println);
 			transaction.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
 			transaction.rollback();
 		} finally {
 			session.close();
