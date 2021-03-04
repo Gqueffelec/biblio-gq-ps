@@ -1,6 +1,10 @@
 package biblio.servlet;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,47 +16,84 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import biblio.controller.CategorieController;
 import biblio.controller.HibernateController;
 import biblio.controller.LivreController;
+import biblio.model.Livre;
 
-@WebServlet("/LivreServlet")
+@WebServlet("/livreServlet")
 public class LivreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private LivreController controller;   
-    
-    @Override
-    public void init() throws ServletException {
-    	controller = new LivreController();
-    }
+	private LivreController livreDao;
+	private CategorieController categorieDao;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("actionLivre");
-		switch (action) {
-		case "create":
-			
-			break;
-		case "remove":
-			
-			break;
-		case "update":
-			
-			break;
-		case "getid":
-			
-			break;
-		case "getall":
-			
-			break;
-		default:
-			response.sendRedirect("accueil");
-			break;
-		}
-		
-		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	@Override
+	public void init() throws ServletException {
+		livreDao = new LivreController();
+		categorieDao = new CategorieController();
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String action = request.getParameter("action");
+		System.out.println(action);
+
+		List listeLivre = this.livreDao.getAll();
+		List listeCategorie = this.categorieDao.getAll();
+		request.setAttribute("listeLivre", listeLivre);
+		request.setAttribute("listeCategorie", listeCategorie);
+
+		switch (action) {
+		case "create":
+
+			String titre = request.getParameter("titre");
+			String dateEdition = request.getParameter("dateEdition");
+			System.out.println(dateEdition);
+			String[] date = dateEdition.split("-");
+			Arrays.asList(date).stream().forEach(System.out::println);
+			int annee = Integer.parseInt(date[0]);
+			int mois = Integer.parseInt(date[1]);
+			int jour = Integer.parseInt(date[2]);
+			Double prix = Double.parseDouble(request.getParameter("prix"));
+			String label = request.getParameter("label");
+			int stock = Integer.parseInt(request.getParameter("stock"));
+			int categorie = Integer.parseInt(request.getParameter("categorie"));
+			this.livreDao.create(Livre.builder().id_categorie(categorie).titre(titre)
+					.date_edition(Date.valueOf(LocalDate.of(annee, mois, jour))).prix(prix).label(label).stock(stock)
+					.build());
+			break;
+		case "remove":
+
+			int livreSuppr = Integer.parseInt(request.getParameter("livre"));
+			this.livreDao.remove(livreSuppr);
+
+			break;
+		case "update":
+
+			int livreModif = Integer.parseInt(request.getParameter("livre"));
+			Double nouveauPrix = Double.parseDouble(request.getParameter("prix"));
+			int nouveauStock = Integer.parseInt(request.getParameter("stock"));
+			Livre update = this.livreDao.getById(livreModif);
+			update.setPrix(nouveauPrix);
+			update.setStock(nouveauStock);
+			this.livreDao.update(update);
+
+			break;
+		case "getid":
+
+			break;
+		case "getall":
+
+			break;
+		default:
+
+			break;
+		}
+		response.sendRedirect("accueil");
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
