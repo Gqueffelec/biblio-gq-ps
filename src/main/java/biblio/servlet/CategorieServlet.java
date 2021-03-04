@@ -2,6 +2,7 @@ package biblio.servlet;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,6 +33,9 @@ public class CategorieServlet extends HttpServlet {
 		System.out.println("asset :"+action);
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
+		int id =0;
+		String json = null;
+		Categorie temp = null;
 		switch (action) {
 		case "create":
 			if (request.getParameter("nom").equals("")||request.getParameter("label").equals("")||request.getParameter("info").equals("")){
@@ -49,7 +53,7 @@ public class CategorieServlet extends HttpServlet {
 				response.getWriter().write("Ce label éxiste déjà");
 				break;
 			}
-			Categorie temp = controller.create(Categorie.builder().nom(request.getParameter("nom")).label(request.getParameter("label")).information_technique(request.getParameter("info")).build());
+			temp = controller.create(Categorie.builder().nom(request.getParameter("nom")).label(request.getParameter("label")).information_technique(request.getParameter("info")).build());
 			System.out.println(temp);
 			if (temp.getId()!=0) {
 				response.getWriter().write("Catégorie ajoutée");
@@ -58,7 +62,7 @@ public class CategorieServlet extends HttpServlet {
 			}
 			break;
 		case "remove":
-			if (request.getParameter("nom").equals("")||request.getParameter("label").equals("")||request.getParameter("info").equals("")){
+			if (request.getParameter("id").equals("") || request.getParameter("nom").equals("")||request.getParameter("label").equals("")||request.getParameter("info").equals("")){
 				response.getWriter().write("Veuillez remplir tous les champs");
 			}
 			break;
@@ -66,15 +70,43 @@ public class CategorieServlet extends HttpServlet {
 			if (request.getParameter("nom").equals("")||request.getParameter("label").equals("")||request.getParameter("info").equals("")){
 				response.getWriter().write("Veuillez remplir tous les champs");
 			}
-			System.out.println(request.getParameter("nom"));
-			//controller.update(null);
+			try {
+				id = Integer.parseInt(request.getParameter("id"));
+				if (id <1) {
+					response.getWriter().write("L'id doit être positif");
+					break;
+				}
+			} catch (NumberFormatException nfe) {
+				response.getWriter().write("L'id doit être un nombre");
+				break;
+			}
+			temp = Categorie.builder().id(id).nom(request.getParameter("nom")).label(request.getParameter("label")).information_technique(request.getParameter("info")).build();
+			if (controller.update(temp)) {
+				response.getWriter().write("Catégorie modifiée");
+			} else {
+				response.getWriter().write("Problème de modification");
+			}
 			break;
-		case "getid":
-			
+		case "getid":	
+			if (request.getParameter("id").equals("")) {
+				response.getWriter().write("ID inexistant");
+				break;
+			}
+			try {
+				id = Integer.parseInt(request.getParameter("id"));
+				temp = controller.getById(id);
+			} catch (NumberFormatException nfe) {
+				response.getWriter().write("L'id doit être un nombre");
+				break;
+			}
+			json = new Gson().toJson(temp);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
 			break;
 		case "getall":
 			List<Categorie> liste = controller.getAll();
-			String json = new Gson().toJson(liste);
+			json = new Gson().toJson(liste);
 			response.setContentType("application/json");
 			response.getWriter().write(json);
 			break;

@@ -29,11 +29,8 @@ public class AccueilServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		List livreList = this.livreDao.getAll();
-
 		request.setAttribute("livreList", livreList);
-
 		request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
 
 	}

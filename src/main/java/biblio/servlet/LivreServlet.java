@@ -29,19 +29,14 @@ public class LivreServlet extends HttpServlet {
 		String action = request.getParameter("actionLivre");
 		switch (action) {
 		case "create":
-			
 			break;
 		case "remove":
-			
 			break;
 		case "update":
-			
 			break;
 		case "getid":
-			
 			break;
 		case "getall":
-			
 			break;
 		default:
 			response.sendRedirect("accueil");
