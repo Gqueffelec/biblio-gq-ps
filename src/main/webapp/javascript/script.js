@@ -1,6 +1,8 @@
-
-
 $(document).ready(function () {
+    updateCategorieList();
+    $.each($(".categorieData"), function () {
+        $(this).hide();
+    })
     $('#dataTable').DataTable();
     $("#createCategorie").on('click', function () {
         console.log("create");
@@ -18,11 +20,13 @@ $(document).ready(function () {
     })
     $("#MAJCategorie").on('click', function () {
         console.log("update");
+        let categorieUpdateId = $("#updateCategorie").find(".categorieId").val();
         let nom = $("#updateCategorieData .nom").val();
         let label = $("#updateCategorieData .label").val();
         let info = $("#updateCategorieData .info").val();
         jQuery.get("CategorieServlet", {
             actionCategorie: "update",
+            id: categorieUpdateId,
             nom: nom,
             label: label,
             info: info
@@ -44,17 +48,34 @@ $(document).ready(function () {
             alert(msg);
         })
     })
+    $("#selectIdUpdate").on('click', function () {
+        let categorieUpdateId = $("#updateCategorie").find(".categorieId").val();
+        jQuery.get("CategorieServlet", {
+            actionCategorie: "getid",
+            id: categorieUpdateId
+        }).done(function (json) {
+            console.log(json);
+            $("#updateCategorieData").find(".nom").val(json.nom);
+            $("#updateCategorieData").find(".label").val(json.label);
+            $("#updateCategorieData").find(".info").val(json.information_technique);
+            $("#updateCategorieData").show();
+            $("#updateSelectId").hide();
+            $("#MAJCategorie").removeAttr("disabled");
+        })
+    })
+
 });
 $(dataTable).ready(function () {
     $('#myTable').dataTable();
 });
 
-function updateNewAsset() {
+
+function updateCategorieList() {
     jQuery.get("CategorieServlet", {
         actionCategorie: "getall"
     }, function (list) {
         let select = $(".categorieId");
-        select.each(function(){
+        select.each(function () {
             select.empty()
             $.each(list, function (id, categorie) {
                 select.append("<option value='" + categorie.id + "'>" + categorie.nom + "</option>");
