@@ -8,7 +8,7 @@ public final class EntityManagerTools {
 	
 	private static EntityManagerTools instance;
 
-    private static final String PERSISTENCE_UNIT_NAME = "CDA_PERSONNE_PU";
+    private static final String PERSISTENCE_UNIT_NAME = "CDA_BIBLI";
     
     private final EntityManager em;
 

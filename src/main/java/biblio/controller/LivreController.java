@@ -26,8 +26,6 @@ public class LivreController implements IController<Livre> {
 		} catch (Exception e) {
 			transaction.rollback();
 			return o;
-		} finally {
-			this.em.close();
 		}
 		return o;
 	}
@@ -44,8 +42,6 @@ public class LivreController implements IController<Livre> {
 		} catch (Exception e) {
 			transaction.rollback();
 			return false;
-		} finally {
-			this.em.close();
 		}
 		return true;
 	}
@@ -69,8 +65,6 @@ public class LivreController implements IController<Livre> {
 		} catch (Exception e) {
 			transaction.rollback();
 			return false;
-		} finally {
-			this.em.close();
 		}
 		return true;
 	}
@@ -87,8 +81,6 @@ public class LivreController implements IController<Livre> {
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
-		} finally {
-			this.em.close();
 		}
 		return o;
 	}
@@ -108,8 +100,6 @@ public class LivreController implements IController<Livre> {
 		} catch (Exception e) {
 			e.printStackTrace();
 			transaction.rollback();
-		} finally {
-			this.em.close();
 		}
 		return liste;
 	}

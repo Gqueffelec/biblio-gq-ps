@@ -44,9 +44,7 @@ public class CategorieController implements IController<Categorie> {
 		} catch (Exception e) {
 			transaction.rollback();
 			return false;
-		} finally {
-			this.em.close();
-		}
+		} 
 		return true;
 	}
 
@@ -67,9 +65,7 @@ public class CategorieController implements IController<Categorie> {
 		} catch (Exception e) {
 			transaction.rollback();
 			return false;
-		} finally {
-			this.em.close();
-		}
+		} 
 		return true;
 	}
 
@@ -102,9 +98,8 @@ public class CategorieController implements IController<Categorie> {
 			liste.stream().forEach(System.out::println);
 			transaction.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
 			transaction.rollback();
-		} finally {
-			this.em.close();
 		}
 		return liste;
 	}
