@@ -36,11 +36,13 @@ public class CategorieServlet extends HttpServlet {
 		case "create":
 			if (request.getParameter("nom").equals("")||request.getParameter("label").equals("")||request.getParameter("info").equals("")){
 				response.getWriter().write("Veuillez remplir tous les champs");
+				System.out.println("Veuillez remplir tous les champs");
 				break;
 			}
 			List<Categorie> listeTemp = controller.getAll();
 			if (listeTemp.stream().anyMatch(e -> e.getNom().equalsIgnoreCase(request.getParameter("nom")))) {
 				response.getWriter().write("Ce nom éxiste déjà");
+				System.out.println("Ce nom éxiste déjà");
 				break;
 			}
 			if (listeTemp.stream().anyMatch(e -> e.getLabel().equalsIgnoreCase(request.getParameter("label")))) {
