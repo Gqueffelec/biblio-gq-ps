@@ -36,6 +36,23 @@ public class CategorieServlet extends HttpServlet {
 		case "create":
 			if (request.getParameter("nom").equals("")||request.getParameter("label").equals("")||request.getParameter("info").equals("")){
 				response.getWriter().write("Veuillez remplir tous les champs");
+				break;
+			}
+			List<Categorie> listeTemp = controller.getAll();
+			if (listeTemp.stream().anyMatch(e -> e.getNom().equalsIgnoreCase(request.getParameter("nom")))) {
+				response.getWriter().write("Ce nom éxiste déjà");
+				break;
+			}
+			if (listeTemp.stream().anyMatch(e -> e.getLabel().equalsIgnoreCase(request.getParameter("label")))) {
+				response.getWriter().write("Ce label éxiste déjà");
+				break;
+			}
+			Categorie temp = controller.create(Categorie.builder().nom(request.getParameter("nom")).label(request.getParameter("label")).information_technique(request.getParameter("info")).build());
+			System.out.println(temp);
+			if (temp.getId()!=0) {
+				response.getWriter().write("Catégorie ajoutée");
+			} else {
+				response.getWriter().write("Problème d'ajout");
 			}
 			break;
 		case "remove":
