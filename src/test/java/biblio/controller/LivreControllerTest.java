@@ -24,13 +24,7 @@ class LivreControllerTest {
 
 	@BeforeAll
 	public static void startUp() {
-		HibernateController.start();
 		controller = new LivreController();
-	}
-
-	@AfterAll
-	public static void finish() {
-		HibernateController.close();
 	}
 
 	@Test

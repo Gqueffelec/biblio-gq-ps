@@ -1,66 +1,62 @@
 package biblio.controller;
 
 import java.util.List;
-
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaQuery;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
 import biblio.model.Livre;
 
 public class LivreController implements IController<Livre> {
 
-	private SessionFactory sessionFactory;
+	private EntityManager em;
 
 	public LivreController() {
-		sessionFactory = HibernateController.getSessionFactory();
+		em = EntityManagerTools.getEntityManager();
 	}
 
 	@Override
 	public Livre create(Livre o) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
+		EntityTransaction transaction = null;
 		try {
-			transaction = session.beginTransaction();
-			session.save(o);
+			transaction = this.em.getTransaction();
+			transaction.begin();
+			this.em.persist(o);
 			System.out.println(o.getId());
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 			return o;
 		} finally {
-			session.close();
+			this.em.close();
 		}
 		return o;
 	}
 
 	@Override
 	public boolean remove(int id) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
+		EntityTransaction transaction = null;
 		try {
-			transaction = session.beginTransaction();
-			Livre o = session.get(Livre.class, id);
-			session.delete(o);
+			transaction = this.em.getTransaction();
+			transaction.begin();
+			Livre o = this.em.find(Livre.class, id);
+			this.em.remove(o);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 			return false;
 		} finally {
-			session.close();
+			this.em.close();
 		}
 		return true;
 	}
 
 	@Override
 	public boolean update(Livre o) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
+		EntityTransaction transaction = null;
 		try {
-			transaction = session.beginTransaction();
-			Livre temp = session.get(Livre.class, o.getId());
+			transaction = this.em.getTransaction();
+			transaction.begin();
+			Livre temp = this.em.find(Livre.class, o.getId());
 			temp.setDate_edition(o.getDate_edition());
 			temp.setId_categorie(o.getId_categorie());
 			temp.setLabel(o.getLabel());
@@ -68,52 +64,52 @@ public class LivreController implements IController<Livre> {
 			temp.setStock(o.getStock());
 			temp.setTitre(o.getTitre());
 			System.err.println(temp);
-			session.persist(temp);
+			this.em.persist(temp);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 			return false;
 		} finally {
-			session.close();
+			this.em.close();
 		}
 		return true;
 	}
 
 	@Override
 	public Livre getById(int id) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
+		EntityTransaction transaction = null;
 		Livre o = null;
 		try {
-			transaction = session.beginTransaction();
-			o = session.get(Livre.class, id);
+			transaction = this.em.getTransaction();
+			transaction.begin();
+			o = this.em.find(Livre.class, id);
 			System.out.println(o);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 		} finally {
-			session.close();
+			this.em.close();
 		}
 		return o;
 	}
 
 	@Override
 	public List<Livre> getAll() {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
+		EntityTransaction transaction = null;
 		List<Livre> liste = null;
 		try {
-			transaction = session.beginTransaction();
-			CriteriaQuery<Livre> criteria = session.getCriteriaBuilder().createQuery(Livre.class);
+			transaction = this.em.getTransaction();
+			transaction.begin();
+			CriteriaQuery<Livre> criteria = this.em.getCriteriaBuilder().createQuery(Livre.class);
 			criteria.from(Livre.class);
-			liste = session.createQuery(criteria).getResultList();
+			liste = this.em.createQuery(criteria).getResultList();
 			liste.stream().forEach(System.out::println);
 			transaction.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			transaction.rollback();
 		} finally {
-			session.close();
+			this.em.close();
 		}
 		return liste;
 	}
