@@ -16,6 +16,8 @@ $(document).ready(function () {
             info: info
         }).done(function (msg) {
             alert(msg);
+            $("#newCategorie").modal("hide");
+            updateCategorieList();
         })
     })
     $("#MAJCategorie").on('click', function () {
@@ -32,20 +34,20 @@ $(document).ready(function () {
             info: info
         }).done(function (msg) {
             alert(msg);
+            $("#updateCategorie").modal("hide");
+            updateCategorieList();
         })
     })
     $("#deleteCategorie").on('click', function () {
-        console.log("remove");
-        let nom = $("#removeCategorieData .nom").val();
-        let label = $("#removeCategorieData .label").val();
-        let info = $("#removeCategorieData .info").val();
+        let idToRemove = $("#removeCategorie .categorieId").val();
+        console.log(idToRemove);
         jQuery.get("CategorieServlet", {
             actionCategorie: "remove",
-            nom: nom,
-            label: label,
-            info: info
+            id: idToRemove
         }).done(function (msg) {
             alert(msg);
+            $("#removeCategorie").modal("hide");
+            updateCategorieList();
         })
     })
     $("#selectIdUpdate").on('click', function () {
@@ -63,7 +65,14 @@ $(document).ready(function () {
             $("#MAJCategorie").removeAttr("disabled");
         })
     })
-
+    $("#updateCategorieButton").on("click", function () {
+        $("#updateSelectId").show();
+        $("#updateCategorieData").hide();
+        $("#updateCategorieData").find(".nom").val("");
+        $("#updateCategorieData").find(".label").val("");
+        $("#updateCategorieData").find(".info").val("");
+        $("#MAJCategorie").attr("disabled", true);
+    })
 });
 $(dataTable).ready(function () {
     $('#myTable').dataTable();

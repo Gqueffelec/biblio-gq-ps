@@ -62,8 +62,23 @@ public class CategorieServlet extends HttpServlet {
 			}
 			break;
 		case "remove":
-			if (request.getParameter("id").equals("") || request.getParameter("nom").equals("")||request.getParameter("label").equals("")||request.getParameter("info").equals("")){
-				response.getWriter().write("Veuillez remplir tous les champs");
+			if (request.getParameter("id").equals("")){
+				response.getWriter().write("Id invalide");
+			}
+			try {
+				id = Integer.parseInt(request.getParameter("id"));
+				if (id <1) {
+					response.getWriter().write("L'id doit être positif");
+					break;
+				}
+			} catch (NumberFormatException nfe) {
+				response.getWriter().write("L'id doit être un nombre");
+				break;
+			}
+			if (controller.remove(id)) {
+				response.getWriter().write("Catégorie supprimée");
+			} else {
+				response.getWriter().write("Problème de suppresion");
 			}
 			break;
 		case "update":
@@ -105,6 +120,7 @@ public class CategorieServlet extends HttpServlet {
 			response.getWriter().write(json);
 			break;
 		case "getall":
+			System.out.println("get liste");
 			List<Categorie> liste = controller.getAll();
 			json = new Gson().toJson(liste);
 			response.setContentType("application/json");

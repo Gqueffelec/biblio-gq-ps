@@ -47,9 +47,9 @@ charset=UTF-8" pageEncoding="UTF-8" %>
 							data-target="#newCategorie" id="newCategorieButton">Ajouter une
 							catégorie</button>
 						<button class="btn btn-outline-success ml-5 my-2 my-sm-0" type="button" data-toggle="modal"
-							data-target="#updateCategorie" id="updateCategorieButton">Modifier un catégorie</button>
+							data-target="#updateCategorie" id="updateCategorieButton">Modifier une catégorie</button>
 						<button class="btn btn-outline-success ml-5 my-2 my-sm-0" type="button" data-toggle="modal"
-							data-target="#removeCategorie" id="removeCategorieButton">Supprimer un catégorie</button>
+							data-target="#removeCategorie" id="removeCategorieButton">Supprimer une catégorie</button>
 					</div>
 				</li>
 			</ul>
