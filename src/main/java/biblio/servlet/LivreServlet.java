@@ -46,7 +46,6 @@ public class LivreServlet extends HttpServlet {
 		switch (action) {
 		case "create":
 
-
 			String titre = request.getParameter("titre");
 			String dateEdition = request.getParameter("dateEdition");
 			System.out.println(dateEdition);
@@ -65,13 +64,11 @@ public class LivreServlet extends HttpServlet {
 			break;
 		case "remove":
 
-
 			int livreSuppr = Integer.parseInt(request.getParameter("livre"));
 			this.livreDao.remove(livreSuppr);
 
 			break;
 		case "update":
-
 
 			int livreModif = Integer.parseInt(request.getParameter("livre"));
 			Double nouveauPrix = Double.parseDouble(request.getParameter("prix"));
@@ -84,10 +81,8 @@ public class LivreServlet extends HttpServlet {
 			break;
 		case "getid":
 
-
 			break;
 		case "getall":
-
 
 			break;
 		default:
