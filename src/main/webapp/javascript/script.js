@@ -78,7 +78,6 @@ $(dataTable).ready(function () {
     $('#myTable').dataTable();
 });
 
-
 function updateCategorieList() {
     jQuery.get("CategorieServlet", {
         actionCategorie: "getall"
