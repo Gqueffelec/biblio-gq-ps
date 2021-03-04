@@ -12,12 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-
 import biblio.controller.CategorieController;
-import biblio.controller.HibernateController;
 import biblio.controller.LivreController;
 import biblio.model.Livre;
 

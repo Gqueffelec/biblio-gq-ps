@@ -1,7 +1,6 @@
 package biblio.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,10 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import biblio.controller.CategorieController;
-import biblio.controller.HibernateController;
-import biblio.controller.IController;
 import biblio.controller.LivreController;
-import biblio.model.Livre;
 
 @WebServlet("/accueil")
 public class AccueilServlet extends HttpServlet {
@@ -25,7 +21,6 @@ public class AccueilServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		HibernateController.start();
 		livreDao = new LivreController();
 		categorieDao = new CategorieController();
 	}

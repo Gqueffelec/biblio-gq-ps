@@ -21,13 +21,7 @@ class CategorieControllerTest {
 
 	@BeforeAll
 	public static void startUp() {
-		HibernateController.start();
 		controller = new CategorieController();
-	}
-
-	@AfterAll
-	public static void finish() {
-		HibernateController.close();
 	}
 
 	@Test
@@ -66,7 +60,7 @@ class CategorieControllerTest {
 	public void test_get_all() {
 		assertEquals(listeSize + 1, controller.getAll().size());
 	}
-	
+
 	@Test
 	@Order(5)
 	void test_remove() {

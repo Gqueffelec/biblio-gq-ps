@@ -1,115 +1,105 @@
 package biblio.controller;
 
 import java.util.List;
-
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaQuery;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
 import biblio.model.Categorie;
 
 public class CategorieController implements IController<Categorie> {
 
-	private SessionFactory sessionFactory;
+	private EntityManager em;
 
 	public CategorieController() {
-		sessionFactory = HibernateController.getSessionFactory();
+		em = EntityManagerTools.getEntityManager();
 	}
 
 	@Override
 	public Categorie create(Categorie o) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
+
+		EntityTransaction transaction = null;
 		try {
-			transaction = session.beginTransaction();
-			session.save(o);
+			transaction = this.em.getTransaction();
+			transaction.begin();
+			this.em.persist(o);
 			System.out.println(o.getId());
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 			return o;
-		} finally {
-			session.close();
 		}
 		return o;
 	}
 
 	@Override
 	public boolean remove(int id) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
+
+		EntityTransaction transaction = null;
 		try {
-			transaction = session.beginTransaction();
-			Categorie o = session.get(Categorie.class, id);
-			session.delete(o);
+			transaction = this.em.getTransaction();
+			transaction.begin();
+			Categorie o = this.em.find(Categorie.class, id);
+			this.em.remove(o);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 			return false;
-		} finally {
-			session.close();
-		}
+		} 
 		return true;
 	}
 
 	@Override
 	public boolean update(Categorie o) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
+
+		EntityTransaction transaction = null;
 		try {
-			transaction = session.beginTransaction();
-			Categorie temp = session.get(Categorie.class, o.getId());
+			transaction = this.em.getTransaction();
+			transaction.begin();
+			Categorie temp = this.em.find(Categorie.class, o.getId());
 			temp.setNom(o.getNom());
 			temp.setLabel(o.getLabel());
 			temp.setInformation_technique(o.getInformation_technique());
-			session.persist(temp);
+			this.em.persist(temp);
 			System.out.println(o.getId());
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
 			return false;
-		} finally {
-			session.close();
-		}
+		} 
 		return true;
 	}
 
 	@Override
 	public Categorie getById(int id) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
+		EntityTransaction transaction = null;
 		Categorie o = null;
 		try {
-			transaction = session.beginTransaction();
-			o = session.get(Categorie.class, id);
+			transaction = this.em.getTransaction();
+			transaction.begin();
+			o = this.em.find(Categorie.class, id);
 			System.out.println(o);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
-		} finally {
-			session.close();
 		}
 		return o;
 	}
 
 	@Override
 	public List<Categorie> getAll() {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = null;
+		EntityTransaction transaction = null;
 		List<Categorie> liste = null;
 		try {
-			transaction = session.beginTransaction();
-			CriteriaQuery<Categorie> criteria = session.getCriteriaBuilder().createQuery(Categorie.class);
+			transaction = this.em.getTransaction();
+			transaction.begin();
+			CriteriaQuery<Categorie> criteria = this.em.getCriteriaBuilder().createQuery(Categorie.class);
 			criteria.from(Categorie.class);
-			liste = session.createQuery(criteria).getResultList();
+			liste = this.em.createQuery(criteria).getResultList();
 			liste.stream().forEach(System.out::println);
 			transaction.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
 			transaction.rollback();
-		} finally {
-			session.close();
 		}
 		return liste;
 	}
