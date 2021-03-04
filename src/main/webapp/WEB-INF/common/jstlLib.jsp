@@ -27,18 +27,22 @@ charset=UTF-8" pageEncoding="UTF-8" %>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav">
-				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navBarDropdownLivre"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navBarDropdownLivre"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion
 						des Livres </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<button class="btn btn-outline-success ml-5 my-2 my-sm-0" type="submit">Ajouter un
-							livre</button>
-						<button class="btn btn-outline-success ml-5 my-2 my-sm-0" type="submit">Modifier un
-							livre</button>
-						<button class="btn btn-outline-success ml-5 my-2 my-sm-0" type="submit">Supprimer un
-							livre</button>
-					</div>
-				</li>
+						<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
+							type="button" data-toggle="modal" data-target="#newLivre"
+							id="newLivreButton">Ajouter un livre</button>
+						<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
+							type="button" data-toggle="modal" data-target="#updateLivre"
+							id="updateLivreButton">Modifier un livre</button>
+						<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
+							type="button" data-toggle="modal" data-target="#removeLivre"
+							id="removeLivreButton">Supprimer un livre</button>
+					</div></li>
+			
 				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navBarDropdownCategorie"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion des
 						Catégories </a>
@@ -142,6 +146,164 @@ charset=UTF-8" pageEncoding="UTF-8" %>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
 					<button type="button" class="btn btn-primary" id="deleteCategorie">Supprimer</button>
 				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	<!-- ajout livre -->
+	<div class="modal fade" id="newLivre" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Nouveau Livre</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<form action="/temp-name/livreServlet?action=create" method="post">
+						<div id="createLivreData">
+							<div>
+								<label for="categorie">Categorie : </label> <select
+									name="categorie">
+									<c:forEach items="${listeCategorie }" var="categorie">
+										<option value="${categorie.id}">${categorie.nom}</option>
+									</c:forEach>
+								</select> <br>
+
+							</div>
+							<table class="table">
+								<tr>
+									<td><label for="nom">Titre : </label></td>
+									<td><input type="text" name="titre" class="titre">
+									</td>
+								</tr>
+								<tr>
+									<td><label for="dateEdition">Date d'édition : </label></td>
+									<td><input type="date" name="dateEdition"
+										class="dateEdition"></td>
+								</tr>
+								<tr>
+									<td><label for="prix">Prix : </label></td>
+									<td><input type="number" step="0.01" name="prix"></td>
+								</tr>
+								<tr>
+									<td><label for="label">Label : </label></td>
+									<td><input type="text" name="label" class="label"></td>
+								</tr>
+								<tr>
+									<td><label for="stock">Stock : </label></td>
+									<td><input type="number" name="stock"></td>
+								</tr>
+							</table>
+
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Fermer</button>
+							<button type="submit" class="btn btn-primary"
+								id="createCategorie">Ajouter</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- modif livre -->
+	<div class="modal fade" id="updateLivre" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modifier un
+						livre</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="/temp-name/livreServlet?action=update" method="post">
+						<div id="updateLivreData">
+							<div>
+								<select name="livre">
+									<c:forEach items="${livreList }" var="livre">
+										<option value="${livre.id}">${livre.titre}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<br>
+
+							<table class="table">
+								<tr>
+									<td><label for="prix">Prix : </label></td>
+									<td><input type="number" step="0.01" name="prix"></td>
+								</tr>
+								<tr>
+									<td><label for="stock">Stock : </label></td>
+									<td><input type="number" name="stock"></td>
+								</tr>
+							</table>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Fermer</button>
+							<button type="submit" class="btn btn-primary" id="MAJCategorie">Mettre
+								à jour</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- 	remove livre -->
+	<div class="modal fade" id="removeLivre" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Supprimer un
+						Livre</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<form action="/temp-name/livreServlet?action=remove" method="post">
+
+						<div id="removeLivreData">
+							<div>
+								<select name="livre">
+									<c:forEach items="${livreList }" var="livre">
+										<option value="${livre.id}">${livre.titre}</option>
+									</c:forEach>
+								</select>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Fermer</button>
+							<button type="submit" class="btn btn-primary"
+								id="deleteCategorie">Supprimer</button>
+						</div>
+
+					</form>
+				</div>
+
+
 			</div>
 		</div>
 	</div>
