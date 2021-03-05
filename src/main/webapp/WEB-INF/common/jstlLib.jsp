@@ -70,6 +70,20 @@ charset=UTF-8"
 					</div></li>
 			</ul>
 		</div>
+		<div class="flex-lg-column">
+		<ul class="navbar-nav">
+		<li class="nav-item">
+		<c:url value="signIn" var="signIn"> 
+		</c:url>
+		<a class="nav-link disabled" href="${signIn }">Inscription</a>
+		</li>
+		<li class="nav-item">
+		<c:url value="login" var="login"> 
+		</c:url>
+		<a class="nav-link" href="${login }">Login</a>
+		</li>
+		</ul>
+		</div>
 	</nav>
 	<div class="modal fade" id="newCategorie" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
