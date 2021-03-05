@@ -3,8 +3,7 @@
 <br>
 
 <div class="container">
-	<table class="table table-bordered" id="dataTable" width="100%"
-		cellspacing="0">
+	<table class="table table-bordered" id="dataTable">
 		<thead>
 			<tr>
 				<th>Catégorie</th>
@@ -20,7 +19,7 @@
 			<c:forEach items="${livreList }" var="livreList" varStatus="vs">
 
 				<tr class="centrer" id="${livreList.date_edition }">
-					<td>${livreList.id_categorie }</td>
+					<td>${livreList.categorie.nom }</td>
 					<td>${livreList.label }</td>
 					<td>${livreList.titre }</td>
 					<td>${livreList.stock }</td>

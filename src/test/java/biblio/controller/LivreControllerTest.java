@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import biblio.model.Categorie;
 import biblio.model.Livre;
 
 @TestMethodOrder(OrderAnnotation.class)
@@ -30,7 +31,7 @@ class LivreControllerTest {
 	@Order(1)
 	void test_create() {
 		listeSize = controller.getAll().size();
-		Livre livre = Livre.builder().titre("Le petit Poucet").id_categorie(1).label("ROM1PTIPC").prix(29.99).stock(5)
+		Livre livre = Livre.builder().titre("Le petit Poucet").categorie(Categorie.builder().id(1).build()).label("ROM1PTIPC").prix(29.99).stock(5)
 				.date_edition(Date.valueOf(LocalDate.of(1697, 1, 1))).build();
 		Livre test = controller.create(livre);
 		testId = test.getId();
@@ -50,7 +51,7 @@ class LivreControllerTest {
 	@Test
 	@Order(3)
 	public void test_update() {
-		Livre livre = Livre.builder().titre("Le petit Poucet").id_categorie(1).label("ROM1PTIPC").prix(29.99).stock(1)
+		Livre livre = Livre.builder().titre("Le petit Poucet").categorie(Categorie.builder().id(1).build()).label("ROM1PTIPC").prix(29.99).stock(1)
 				.date_edition(Date.valueOf(LocalDate.of(1997, 1, 1))).id(testId).build();
 		boolean test = controller.update(livre);
 		livre = controller.getById(testId);

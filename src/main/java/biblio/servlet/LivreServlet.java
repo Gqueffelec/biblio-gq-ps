@@ -26,7 +26,7 @@ import biblio.model.Livre;
 @WebServlet("/livreServlet")
 public class LivreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Autowired
 	private LivreController livreDao;
 	@Autowired
@@ -64,8 +64,8 @@ public class LivreServlet extends HttpServlet {
 			Double prix = Double.parseDouble(request.getParameter("prix"));
 			String label = request.getParameter("label");
 			int stock = Integer.parseInt(request.getParameter("stock"));
-			int categorie = Integer.parseInt(request.getParameter("categorie"));
-			this.livreDao.create(Livre.builder().id_categorie(categorie).titre(titre)
+			Categorie categorie = categorieDao.getById(Integer.parseInt(request.getParameter("categorie")));
+			this.livreDao.create(Livre.builder().categorie(categorie).titre(titre)
 					.date_edition(Date.valueOf(LocalDate.of(annee, mois, jour))).prix(prix).label(label).stock(stock)
 					.build());
 			break;

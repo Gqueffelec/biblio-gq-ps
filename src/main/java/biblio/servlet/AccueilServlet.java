@@ -45,7 +45,7 @@ public class AccueilServlet extends HttpServlet {
 		request.setAttribute("livreList", livreList);
 		request.setAttribute("listeCategorie", listeCategorie);
 
-		request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/pageLogin.jsp").forward(request, response);
 
 	}
 
