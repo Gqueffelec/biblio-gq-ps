@@ -28,6 +28,7 @@ charset=UTF-8"
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav">
+			<c:if test="${sessionScope.admin }">
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navBarDropdownLivre"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion
@@ -59,6 +60,7 @@ charset=UTF-8"
 							type="button" data-toggle="modal" data-target="#removeCategorie"
 							id="removeCategorieButton">Supprimer une catégorie</button>
 					</div></li>
+			</c:if>
 			</ul>
 		</div>
 		<div class="flex-lg-column">
