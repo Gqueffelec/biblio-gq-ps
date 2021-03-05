@@ -5,6 +5,7 @@
 				<form class="box" method="post" action="login">
 					<h1>Login</h1>
 					<p class="text-muted">Please enter your login and password!</p>
+					<h4 style="color:red"><c:out value="${error }"></c:out></h4>
 					<input type="text" name="user" placeholder="Username"> <input
 						type="password" name="password" placeholder="Password"> <a
 						class="forgot text-muted" href="#">Forgot password?</a> <input

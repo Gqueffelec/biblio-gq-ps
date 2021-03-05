@@ -55,20 +55,30 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String userName = request.getParameter("user");
 		String password = request.getParameter("password");
-		List<User> liste = userController.getAll();
-		Optional<User> test = liste.stream().filter(e -> e.getNom().equalsIgnoreCase(userName)).findAny();
-		if (test.isPresent()) {
-			if(test.get().getPassword().equals(password)) {
-				System.out.println("tout est bon");
-				HttpSession session = request.getSession(Boolean.TRUE);
-				session.setAttribute("connect", true);
-				session.setAttribute("admin", test.get().isAdmin());
-				request.getRequestDispatcher("accueil").forward(request, response);
-			} else {
-				System.out.println("mauvais password");
-			}
+		String error = "Mauvais login ou mot de passe";
+		if (request.getParameter("user").equals("") || request.getParameter("password").equals("")) {
+			error = "Veuillez remplir tous les champs";
+			System.out.println(error);
+			request.setAttribute("error", error);
+			doGet(request, response);
 		} else {
-			System.out.println("mauvais login");
+			List<User> liste = userController.getAll();
+			Optional<User> test = liste.stream().filter(e -> e.getNom().equalsIgnoreCase(userName)).findAny();
+			if (test.isPresent()) {
+				if (test.get().getPassword().equals(password)) {
+					System.out.println("tout est bon");
+					HttpSession session = request.getSession(Boolean.TRUE);
+					session.setAttribute("connect", true);
+					session.setAttribute("admin", test.get().isAdmin());
+					request.getRequestDispatcher("accueil").forward(request, response);
+				} else {
+					request.setAttribute("error", error);
+					doGet(request, response);
+				}
+			} else {
+				request.setAttribute("error", error);
+				doGet(request, response);
+			}
 		}
 	}
 
