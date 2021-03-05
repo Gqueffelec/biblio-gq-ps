@@ -63,13 +63,29 @@ charset=UTF-8"
 		</div>
 		<div class="flex-lg-column">
 			<ul class="navbar-nav">
-				<li class="nav-item"><c:url value="signIn" var="signIn">
-					</c:url> <a class="nav-link disabled" href="${signIn }">Inscription</a></li>
-				<li class="nav-item"><c:url value="login" var="login">
-					</c:url> <a class="nav-link" href="${login }">Login</a></li>
+				<c:choose>
+					<c:when test="${sessionScope.connect }">
+						<c:url value="accueil?signOut=true" var="signOut">
+						</c:url>
+						<li class="nav-item"><a class="nav-link disabled"
+							href="${signOut }">Deconnexion</a></li>
+					</c:when>
+					<c:otherwise>
+					<li class="nav-item"><c:url value="signIn" var="signIn">
+						</c:url> <a class="nav-link disabled" href="${signIn }">Inscription</a></li>
+					<li class="nav-item"><c:url value="login" var="login">
+						</c:url> <a class="nav-link" href="${login }">Login</a></li>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 		</div>
 	</nav>
+	<c:if test="${sessionScope.connect }">
+		<div>Je suis connecté</div>
+		<c:if test="${sessionScope.admin }">
+			<div>je suis un admin</div>
+		</c:if>
+	</c:if>
 	<div class="modal fade" id="newCategorie" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">

@@ -2,13 +2,13 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="card">
-				<form class="box">
+				<form class="box" method="post" action="login">
 					<h1>Login</h1>
 					<p class="text-muted">Please enter your login and password!</p>
-					<input type="text" name="" placeholder="Username"> <input
-						type="password" name="" placeholder="Password"> <a
+					<input type="text" name="user" placeholder="Username"> <input
+						type="password" name="password" placeholder="Password"> <a
 						class="forgot text-muted" href="#">Forgot password?</a> <input
-						type="submit" name="" value="Login" href="#">
+						type="submit" name="login" value="Login">
 					<div class="col-md-12">
 						<ul class="social-network social-circle">
 							<li><a href="#" class="icoFacebook" title="Facebook"><i
