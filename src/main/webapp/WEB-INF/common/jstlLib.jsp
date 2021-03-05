@@ -15,20 +15,11 @@ charset=UTF-8"
 <link rel="stylesheet" href="css/style.css">
 <script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js"
 	data-auto-replace-svg="nest"></script>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/style.css">
-<script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js"
-	data-auto-replace-svg="nest"></script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">Bibliothèque</a>
+		<c:url value="accueil" var="accueil"></c:url>
+		<a class="navbar-brand" href="${accueil }">Bibliothèque</a>
 
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
@@ -71,18 +62,12 @@ charset=UTF-8"
 			</ul>
 		</div>
 		<div class="flex-lg-column">
-		<ul class="navbar-nav">
-		<li class="nav-item">
-		<c:url value="signIn" var="signIn"> 
-		</c:url>
-		<a class="nav-link disabled" href="${signIn }">Inscription</a>
-		</li>
-		<li class="nav-item">
-		<c:url value="login" var="login"> 
-		</c:url>
-		<a class="nav-link" href="${login }">Login</a>
-		</li>
-		</ul>
+			<ul class="navbar-nav">
+				<li class="nav-item"><c:url value="signIn" var="signIn">
+					</c:url> <a class="nav-link disabled" href="${signIn }">Inscription</a></li>
+				<li class="nav-item"><c:url value="login" var="login">
+					</c:url> <a class="nav-link" href="${login }">Login</a></li>
+			</ul>
 		</div>
 	</nav>
 	<div class="modal fade" id="newCategorie" tabindex="-1" role="dialog"
