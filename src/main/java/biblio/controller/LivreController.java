@@ -4,8 +4,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaQuery;
+
+import org.springframework.stereotype.Service;
+
 import biblio.model.Livre;
 
+@Service
 public class LivreController implements IController<Livre> {
 
 	private EntityManager em;

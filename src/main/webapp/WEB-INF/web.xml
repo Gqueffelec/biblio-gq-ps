@@ -16,4 +16,12 @@
 			<include-coda>/WEB-INF/common/footer.jsp</include-coda>
 		</jsp-property-group>
 	</jsp-config>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring-configuration.xml</param-value>
+	</context-param>
 </web-app>
