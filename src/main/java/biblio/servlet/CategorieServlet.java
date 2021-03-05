@@ -2,13 +2,18 @@ package biblio.servlet;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.google.gson.Gson;
 
@@ -21,11 +26,15 @@ import biblio.model.Categorie;
 @WebServlet("/CategorieServlet")
 public class CategorieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@Autowired
 	private CategorieController controller;
 
 	@Override
-	public void init() throws ServletException {
-		controller = new CategorieController();
+	public void init(final ServletConfig config) throws ServletException {
+		WebApplicationContext springContext = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(config.getServletContext());
+		final AutowireCapableBeanFactory beanFactory = springContext.getAutowireCapableBeanFactory();
+		beanFactory.autowireBean(this);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

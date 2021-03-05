@@ -86,9 +86,9 @@ charset=UTF-8"
 				<div class="modal-body">
 					<div id="createCategorieData">
 						<label for="nom">Nom</label> <input type="text" name="nom"
-							class="nom"></br> <label for="label">Label</label> <input
-							type="text" name="label" class="label"></br> <label for="info">Information
-							Technique</label> <input type="text" name="info" class="info"></br>
+							class="nom"><br> <label for="label">Label</label> <input
+							type="text" name="label" class="label"><br> <label for="info">Information
+							Technique</label> <input type="text" name="info" class="info"><br>
 					</div>
 				</div>
 				<div class="modal-footer">
