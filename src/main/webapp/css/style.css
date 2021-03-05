@@ -126,3 +126,7 @@ a.socialIcon:hover, .socialHoverClass {
 	transition: all 0.8s;
 	transition: all 0.8s
 }
+
+#dataTable {
+	background-color: white;
+}
