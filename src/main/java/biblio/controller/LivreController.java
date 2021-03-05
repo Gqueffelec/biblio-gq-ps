@@ -58,7 +58,7 @@ public class LivreController implements IController<Livre> {
 			transaction.begin();
 			Livre temp = this.em.find(Livre.class, o.getId());
 			temp.setDate_edition(o.getDate_edition());
-			temp.setId_categorie(o.getId_categorie());
+			temp.setCategorie(o.getCategorie());
 			temp.setLabel(o.getLabel());
 			temp.setPrix(o.getPrix());
 			temp.setStock(o.getStock());
