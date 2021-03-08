@@ -19,6 +19,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import biblio.controller.UserController;
 import biblio.model.User;
+import biblio.utils.Password;
 
 /**
  * Servlet implementation class LoginServlet
@@ -55,6 +56,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String userName = request.getParameter("user");
 		String password = request.getParameter("password");
+		String passBDD = Password.getHash(password);
 		String error = "Mauvais login ou mot de passe";
 		if (request.getParameter("user").equals("") || request.getParameter("password").equals("")) {
 			error = "Veuillez remplir tous les champs";
@@ -65,7 +67,7 @@ public class LoginServlet extends HttpServlet {
 			List<User> liste = userController.getAll();
 			Optional<User> test = liste.stream().filter(e -> e.getNom().equalsIgnoreCase(userName)).findAny();
 			if (test.isPresent()) {
-				if (test.get().getPassword().equals(password)) {
+				if (test.get().getPassword().equals(passBDD)) {
 					System.out.println("tout est bon");
 					HttpSession session = request.getSession(Boolean.TRUE);
 					session.setAttribute("connect", true);
