@@ -22,6 +22,7 @@ import biblio.controller.UserController;
 import biblio.model.Categorie;
 import biblio.model.Livre;
 import biblio.model.User;
+import biblio.utils.Password;
 
 @WebServlet("/accueil")
 public class AccueilServlet extends HttpServlet {
@@ -41,7 +42,7 @@ public class AccueilServlet extends HttpServlet {
 		final AutowireCapableBeanFactory beanFactory = springContext.getAutowireCapableBeanFactory();
 		beanFactory.autowireBean(this);
 		if (userDao.getById(1) == null) {
-			User admin = User.builder().nom("libraire").password("admin").admin(true).build();
+			User admin = User.builder().nom("libraire").password(Password.getHash("admin")).admin(true).build();
 			userDao.create(admin);
 		}
 	}
