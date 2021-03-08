@@ -17,7 +17,7 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import biblio.controller.UserController;
+import biblio.dao.UserDAO;
 import biblio.model.User;
 import biblio.utils.Password;
 
@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private UserController userController;
+	private UserDAO userController;
 
 	@Override
 	public void init(final ServletConfig config) throws ServletException {

@@ -15,19 +15,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import biblio.controller.CategorieController;
-import biblio.controller.LivreController;
+import biblio.dto.CategorieDTO;
+import biblio.dto.LivreDTO;
 import biblio.model.Categorie;
 import biblio.model.Livre;
+import biblio.service.CategorieService;
+import biblio.service.LivreService;
 
 @WebServlet("/livreServlet")
 public class LivreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private LivreController livreDao;
+	private LivreService livreService;
 	@Autowired
-	private CategorieController categorieDao;
+	private CategorieService categorieService;
 
 	@Override
 	public void init(final ServletConfig config) throws ServletException {
@@ -42,8 +44,8 @@ public class LivreServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		System.out.println(action);
 
-		List<Livre> listeLivre = this.livreDao.getAll();
-		List<Categorie> listeCategorie = this.categorieDao.getAll();
+		List<LivreDTO> listeLivre = this.livreService.getAll();
+		List<CategorieDTO> listeCategorie = this.categorieService.getAll();
 		request.setAttribute("listeLivre", listeLivre);
 		request.setAttribute("listeCategorie", listeCategorie);
 
@@ -61,15 +63,15 @@ public class LivreServlet extends HttpServlet {
 			Double prix = Double.parseDouble(request.getParameter("prix"));
 			String label = request.getParameter("label");
 			int stock = Integer.parseInt(request.getParameter("stock"));
-			Categorie categorie = categorieDao.getById(Integer.parseInt(request.getParameter("categorie")));
-			this.livreDao.create(Livre.builder().categorie(categorie).titre(titre)
+			CategorieDTO categorie = categorieService.getById(Integer.parseInt(request.getParameter("categorie")));
+			this.livreService.add(LivreDTO.builder().categorie(categorie).titre(titre)
 					.date_edition(Date.valueOf(LocalDate.of(annee, mois, jour))).prix(prix).label(label).stock(stock)
 					.build());
 			break;
 		case "remove":
 
 			int livreSuppr = Integer.parseInt(request.getParameter("livre"));
-			this.livreDao.remove(livreSuppr);
+			this.livreService.deleteById(livreSuppr);
 
 			break;
 		case "update":
@@ -77,10 +79,10 @@ public class LivreServlet extends HttpServlet {
 			int livreModif = Integer.parseInt(request.getParameter("livre"));
 			Double nouveauPrix = Double.parseDouble(request.getParameter("prix"));
 			int nouveauStock = Integer.parseInt(request.getParameter("stock"));
-			Livre update = this.livreDao.getById(livreModif);
+			LivreDTO update = this.livreService.getById(livreModif);
 			update.setPrix(nouveauPrix);
 			update.setStock(nouveauStock);
-			this.livreDao.update(update);
+			this.livreService.update(update);
 
 			break;
 		case "getid":

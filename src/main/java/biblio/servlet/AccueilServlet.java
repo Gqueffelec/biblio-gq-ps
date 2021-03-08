@@ -16,12 +16,12 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import biblio.controller.CategorieController;
-import biblio.controller.LivreController;
-import biblio.controller.UserController;
-import biblio.model.Categorie;
-import biblio.model.Livre;
+import biblio.dao.UserDAO;
+import biblio.dto.CategorieDTO;
+import biblio.dto.LivreDTO;
 import biblio.model.User;
+import biblio.service.CategorieService;
+import biblio.service.LivreService;
 import biblio.utils.Password;
 
 @WebServlet("/accueil")
@@ -29,11 +29,11 @@ public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private LivreController livreDao;
+	private LivreService livreService;
 	@Autowired
-	private CategorieController categorieDao;
+	private CategorieService categorieService;
 	@Autowired
-	private UserController userDao;
+	private UserDAO userDao;
 
 	@Override
 	public void init(final ServletConfig config) throws ServletException {
@@ -55,8 +55,8 @@ public class AccueilServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.invalidate();
 		}
-		List<Livre> livreList = this.livreDao.getAll();
-		List<Categorie> listeCategorie = this.categorieDao.getAll();
+		List<LivreDTO> livreList = this.livreService.getAll();
+		List<CategorieDTO> listeCategorie = this.categorieService.getAll();
 		request.setAttribute("livreList", livreList);
 		request.setAttribute("listeCategorie", listeCategorie);
 		request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);

@@ -17,8 +17,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.google.gson.Gson;
 
-import biblio.controller.CategorieController;
-import biblio.model.Categorie;
+import biblio.dto.CategorieDTO;
+import biblio.service.CategorieService;
 
 /**
  * Servlet implementation class CategorieServlet
@@ -27,7 +27,7 @@ import biblio.model.Categorie;
 public class CategorieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Autowired
-	private CategorieController controller;
+	private CategorieService service;
 
 	@Override
 	public void init(final ServletConfig config) throws ServletException {
@@ -37,22 +37,24 @@ public class CategorieServlet extends HttpServlet {
 		beanFactory.autowireBean(this);
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String action = request.getParameter("actionCategorie");
-		System.out.println("asset :"+action);
+		System.out.println("asset :" + action);
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF-8");
-		int id =0;
+		int id = 0;
 		String json = null;
-		Categorie temp = null;
+		CategorieDTO temp = null;
 		switch (action) {
 		case "create":
-			if (request.getParameter("nom").equals("")||request.getParameter("label").equals("")||request.getParameter("info").equals("")){
+			if (request.getParameter("nom").equals("") || request.getParameter("label").equals("")
+					|| request.getParameter("info").equals("")) {
 				response.getWriter().write("Veuillez remplir tous les champs");
 				System.out.println("Veuillez remplir tous les champs");
 				break;
 			}
-			List<Categorie> listeTemp = controller.getAll();
+			List<CategorieDTO> listeTemp = service.getAll();
 			if (listeTemp.stream().anyMatch(e -> e.getNom().equalsIgnoreCase(request.getParameter("nom")))) {
 				response.getWriter().write("Ce nom éxiste déjà");
 				System.out.println("Ce nom éxiste déjà");
@@ -62,21 +64,22 @@ public class CategorieServlet extends HttpServlet {
 				response.getWriter().write("Ce label éxiste déjà");
 				break;
 			}
-			temp = controller.create(Categorie.builder().nom(request.getParameter("nom")).label(request.getParameter("label")).information_technique(request.getParameter("info")).build());
-			System.out.println(temp);
-			if (temp.getId()!=0) {
-				response.getWriter().write("Catégorie ajoutée");
-			} else {
-				response.getWriter().write("Problème d'ajout");
-			}
+			service.add(CategorieDTO.builder().nom(request.getParameter("nom")).label(request.getParameter("label"))
+					.information_technique(request.getParameter("info")).build());
+//			System.out.println(temp);
+//			if (temp.getId()!=0) {
+			response.getWriter().write("Catégorie ajoutée");
+//			} else {
+//				response.getWriter().write("Problème d'ajout");
+//			}
 			break;
 		case "remove":
-			if (request.getParameter("id").equals("")){
+			if (request.getParameter("id").equals("")) {
 				response.getWriter().write("Id invalide");
 			}
 			try {
 				id = Integer.parseInt(request.getParameter("id"));
-				if (id <1) {
+				if (id < 1) {
 					response.getWriter().write("L'id doit être positif");
 					break;
 				}
@@ -84,19 +87,21 @@ public class CategorieServlet extends HttpServlet {
 				response.getWriter().write("L'id doit être un nombre");
 				break;
 			}
-			if (controller.remove(id)) {
-				response.getWriter().write("Catégorie supprimée");
-			} else {
-				response.getWriter().write("Problème de suppresion");
-			}
+			service.deleteById(id);
+//			{
+			response.getWriter().write("Catégorie supprimée");
+//			} else {
+//				response.getWriter().write("Problème de suppresion");
+//			}
 			break;
 		case "update":
-			if (request.getParameter("nom").equals("")||request.getParameter("label").equals("")||request.getParameter("info").equals("")){
+			if (request.getParameter("nom").equals("") || request.getParameter("label").equals("")
+					|| request.getParameter("info").equals("")) {
 				response.getWriter().write("Veuillez remplir tous les champs");
 			}
 			try {
 				id = Integer.parseInt(request.getParameter("id"));
-				if (id <1) {
+				if (id < 1) {
 					response.getWriter().write("L'id doit être positif");
 					break;
 				}
@@ -104,21 +109,24 @@ public class CategorieServlet extends HttpServlet {
 				response.getWriter().write("L'id doit être un nombre");
 				break;
 			}
-			temp = Categorie.builder().id(id).nom(request.getParameter("nom")).label(request.getParameter("label")).information_technique(request.getParameter("info")).build();
-			if (controller.update(temp)) {
-				response.getWriter().write("Catégorie modifiée");
-			} else {
-				response.getWriter().write("Problème de modification");
-			}
+			temp = CategorieDTO.builder().id(id).nom(request.getParameter("nom")).label(request.getParameter("label"))
+					.information_technique(request.getParameter("info")).build();
+			service.update(temp);
+//			if (
+//					) {
+			response.getWriter().write("Catégorie modifiée");
+//			} else {
+//				response.getWriter().write("Problème de modification");
+//			}
 			break;
-		case "getid":	
+		case "getid":
 			if (request.getParameter("id").equals("")) {
 				response.getWriter().write("ID inexistant");
 				break;
 			}
 			try {
 				id = Integer.parseInt(request.getParameter("id"));
-				temp = controller.getById(id);
+				temp = service.getById(id);
 			} catch (NumberFormatException nfe) {
 				response.getWriter().write("L'id doit être un nombre");
 				break;
@@ -130,7 +138,7 @@ public class CategorieServlet extends HttpServlet {
 			break;
 		case "getall":
 			System.out.println("get liste");
-			List<Categorie> liste = controller.getAll();
+			List<CategorieDTO> liste = service.getAll();
 			json = new Gson().toJson(liste);
 			response.setContentType("application/json");
 			response.getWriter().write(json);

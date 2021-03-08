@@ -1,20 +1,21 @@
-package biblio.controller;
+package biblio.dao;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaQuery;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import biblio.model.Livre;
 
-@Service
-public class LivreController implements IController<Livre> {
+@Repository
+public class LivreDAO implements IDAO<Livre> {
 
 	private EntityManager em;
 
-	public LivreController() {
+	public LivreDAO() {
 		em = EntityManagerTools.getEntityManager();
 	}
 

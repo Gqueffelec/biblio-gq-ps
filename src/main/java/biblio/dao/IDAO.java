@@ -1,8 +1,8 @@
-package biblio.controller;
+package biblio.dao;
 
 import java.util.List;
 
-public interface IController<T> {
+public interface IDAO<T> {
 	public T create(T o);
 	public boolean remove(int id);
 	public boolean update(T o);

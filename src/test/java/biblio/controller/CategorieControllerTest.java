@@ -7,18 +7,19 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import biblio.dao.CategorieDAO;
 import biblio.model.Categorie;
 
 @TestMethodOrder(OrderAnnotation.class)
 class CategorieControllerTest {
 
-	private static CategorieController controller;
+	private static CategorieDAO controller;
 	private static int testId;
 	private static int listeSize;
 
 	@BeforeAll
 	public static void startUp() {
-		controller = new CategorieController();
+		controller = new CategorieDAO();
 	}
 
 	@Test
