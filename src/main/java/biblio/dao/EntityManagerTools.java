@@ -1,4 +1,4 @@
-package biblio.controller;
+package biblio.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

@@ -12,19 +12,20 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import biblio.dao.LivreDAO;
 import biblio.model.Categorie;
 import biblio.model.Livre;
 
 @TestMethodOrder(OrderAnnotation.class)
 class LivreControllerTest {
 
-	private static LivreController controller;
+	private static LivreDAO controller;
 	private static int testId;
 	private static int listeSize;
 
 	@BeforeAll
 	public static void startUp() {
-		controller = new LivreController();
+		controller = new LivreDAO();
 	}
 
 	@Test
