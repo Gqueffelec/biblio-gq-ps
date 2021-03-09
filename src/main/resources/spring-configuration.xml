@@ -11,7 +11,6 @@
 
 	<jpa:repositories base-package="biblio.repository" />
 
-
 	<!-- demander scanne les classes qui sont dans  -->
 	<context:component-scan base-package="biblio">
 		<!-- dans le scanne prendre en compte toutes les classes qui sont dans service OU dao -->

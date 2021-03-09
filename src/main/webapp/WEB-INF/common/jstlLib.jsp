@@ -18,7 +18,7 @@ charset=UTF-8"
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<c:url value="accueil" var="accueil"></c:url>
+		<c:url value="" var="accueil"></c:url>
 		<a class="navbar-brand" href="${accueil }">Bibliothèque</a>
 
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
