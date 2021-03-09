@@ -18,7 +18,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.google.gson.Gson;
 
 import biblio.dto.CategorieDTO;
-import biblio.service.CategorieService;
+import biblio.service.impl.CategorieService;
 
 /**
  * Servlet implementation class CategorieServlet

@@ -1,4 +1,4 @@
-package biblio.service;
+package biblio.service.impl;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import biblio.dao.LivreDAO;
 import biblio.dto.LivreDTO;
 import biblio.model.Livre;
+import biblio.service.ILibrairieService;
 import biblio.utils.LivreMapper;
 
 @Service

@@ -20,8 +20,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import biblio.dto.CategorieDTO;
 import biblio.dto.LivreDTO;
-import biblio.service.CategorieService;
-import biblio.service.LivreService;
+import biblio.service.impl.CategorieService;
+import biblio.service.impl.LivreService;
 
 @WebServlet("/livreServlet")
 public class LivreServlet extends HttpServlet {

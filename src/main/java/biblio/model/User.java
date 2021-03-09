@@ -21,7 +21,7 @@ public class User {
 	@GeneratedValue( strategy = GenerationType.AUTO)
 	private int id;
 	@Column(unique = true)
-	private String nom;
+	private String name;
 	private String password;
 	@Column(nullable = false)
 	private boolean admin;

@@ -1,8 +1,6 @@
 package biblio.servlet;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,8 +14,9 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import biblio.dao.UserDAO;
-import biblio.model.User;
+import biblio.dto.UserDTO;
+import biblio.service.impl.UserService;
+import biblio.utils.Password;
 
 /**
  * Servlet implementation class InscriptionServlet
@@ -27,7 +26,7 @@ public class InscriptionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private UserDAO userController;
+	private UserService userService;
 
 	@Override
 	public void init(final ServletConfig config) throws ServletException {
@@ -63,28 +62,20 @@ public class InscriptionServlet extends HttpServlet {
 			request.setAttribute("error", error);
 			doGet(request, response);
 		} else {
-			List<User> liste = userController.getAll();
-			Optional<User> test = liste.stream().filter(e -> e.getNom().equalsIgnoreCase(userName)).findAny();
-			if (!test.isPresent()) {
-				if (password.equals(password2)) {
-					User user = userController
-							.create(User.builder().nom(userName).password(password).admin(Boolean.FALSE).build());
-					if (user.getId() != 0) {
-						request.getRequestDispatcher("login").forward(request, response);
-					} else {
-						error = "Erreur veuillez réessayer ultérieurement";
-						System.out.println(error);
-						request.setAttribute("error", error);
-						doGet(request, response);
-					}
-				} else {
-					error = "Les mots de passes ne correspondent pas";
+			if (password.equals(password2)) {
+				if (this.userService.getAll().stream().anyMatch(e -> e.getName().equals(userName))) {
+					error = "Ce nom est déjà utilisé";
 					System.out.println(error);
 					request.setAttribute("error", error);
 					doGet(request, response);
+				} else {
+					UserDTO temp = UserDTO.builder().name(userName).admin(false).password(Password.getHash(password))
+							.build();
+					userService.save(temp);
+					response.sendRedirect("/login");
 				}
 			} else {
-				error = "Ce nom est déjà utilisé";
+				error = "Les mots de passes ne correspondent pas";
 				System.out.println(error);
 				request.setAttribute("error", error);
 				doGet(request, response);

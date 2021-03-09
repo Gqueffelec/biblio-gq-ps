@@ -1,27 +1,26 @@
-package biblio.service;
+package biblio.service.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import biblio.dao.CategorieDAO;
 import biblio.dto.CategorieDTO;
 import biblio.model.Categorie;
-import biblio.repository.IRepository;
+import biblio.repository.IRepositoryCategorie;
+import biblio.service.ILibrairieService;
 import biblio.utils.CategorieMapper;
 
 @Service	
 //@Transactional
 public class CategorieService implements ILibrairieService<CategorieDTO> {
 	
-	@Autowired
-	private CategorieDAO dao; 
 	private CategorieMapper mapper = new CategorieMapper();
 	
 	@Autowired
-	private IRepository daoTest;
+	private IRepositoryCategorie dao;
 	
 	
 	public static void main(String[] args) {
@@ -31,7 +30,7 @@ public class CategorieService implements ILibrairieService<CategorieDTO> {
 	@Override
 	public List<CategorieDTO> getAll() {
 		List<CategorieDTO> listeDTO = new LinkedList<>();
-		List<Categorie> listeEntity = this.daoTest.findAll();
+		List<Categorie> listeEntity = this.dao.findAll();
 		for (Categorie entity : listeEntity) {
 			listeDTO.add(mapper.convertToDto(entity));
 		}
@@ -40,26 +39,25 @@ public class CategorieService implements ILibrairieService<CategorieDTO> {
 
 	@Override
 	public CategorieDTO getById(int id) {
-		return mapper.convertToDto(this.daoTest.findById(id));
+		return mapper.convertToDto(this.dao.findById(id).get());
 	}
 
 	@Override
 	public void update(CategorieDTO o) {
-		Categorie temp = this.daoTest.findById(o.getId());	
+		Optional<Categorie> temp = this.dao.findById(o.getId());	
 		Categorie mappedCategorie = mapper.convertToEntity(o);
-		mappedCategorie.setId(temp.getId());
-		this.daoTest.save(mappedCategorie);
+		mappedCategorie.setId(temp.get().getId());
+		this.dao.save(mappedCategorie);
 	}
 
 	@Override
 	public void deleteById(int id) {
-		this.dao.remove(id);
+		this.dao.deleteById(id);
 	}
 
 	@Override
 	public void add(CategorieDTO o) {
-		this.dao.create(mapper.convertToEntity(o));
+		this.dao.save(mapper.convertToEntity(o));
 	}
 
-	
 }
