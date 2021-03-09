@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import biblio.dao.LivreDAO;
 import biblio.dto.LivreDTO;
 import biblio.model.Livre;
 import biblio.repository.IRepositoryLivre;
