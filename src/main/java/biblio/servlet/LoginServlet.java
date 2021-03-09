@@ -1,8 +1,6 @@
 package biblio.servlet;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -17,8 +15,8 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import biblio.dao.UserDAO;
-import biblio.model.User;
+import biblio.dto.UserDTO;
+import biblio.service.impl.UserService;
 import biblio.utils.Password;
 
 /**
@@ -28,8 +26,9 @@ import biblio.utils.Password;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+
 	@Autowired
-	private UserDAO userController;
+	UserService userService;
 
 	@Override
 	public void init(final ServletConfig config) throws ServletException {
@@ -60,23 +59,16 @@ public class LoginServlet extends HttpServlet {
 		String error = "Mauvais login ou mot de passe";
 		if (request.getParameter("user").equals("") || request.getParameter("password").equals("")) {
 			error = "Veuillez remplir tous les champs";
-			System.out.println(error);
 			request.setAttribute("error", error);
 			doGet(request, response);
 		} else {
-			List<User> liste = userController.getAll();
-			Optional<User> test = liste.stream().filter(e -> e.getNom().equalsIgnoreCase(userName)).findAny();
-			if (test.isPresent()) {
-				if (test.get().getPassword().equals(passBDD)) {
-					System.out.println("tout est bon");
-					HttpSession session = request.getSession(Boolean.TRUE);
-					session.setAttribute("connect", true);
-					session.setAttribute("admin", test.get().isAdmin());
-					request.getRequestDispatcher("accueil").forward(request, response);
-				} else {
-					request.setAttribute("error", error);
-					doGet(request, response);
-				}
+			UserDTO loginUser = UserDTO.builder().name(userName).password(passBDD).build();
+			loginUser = userService.login(loginUser);
+			if (loginUser != null) {
+				HttpSession session = request.getSession(Boolean.TRUE);
+				session.setAttribute("connect", true);
+				session.setAttribute("admin", loginUser.isAdmin());
+				request.getRequestDispatcher("accueil").forward(request, response);
 			} else {
 				request.setAttribute("error", error);
 				doGet(request, response);

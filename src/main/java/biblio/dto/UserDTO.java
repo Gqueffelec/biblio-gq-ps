@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class UserDTO {
-	private String nom;
+	private String name;
 	private String password;
 	private boolean admin;
 }

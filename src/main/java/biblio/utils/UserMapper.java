@@ -7,14 +7,13 @@ public class UserMapper implements IMapper<UserDTO, User> {
 
 	@Override
 	public UserDTO convertToDto(User u) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println(u);
+		return UserDTO.builder().admin(u.isAdmin()).name(u.getName()).password(u.getPassword()).build();
 	}
 
 	@Override
 	public User convertToEntity(UserDTO t) {
-		// TODO Auto-generated method stub
-		return null;
+		return User.builder().name(t.getName()).admin(t.isAdmin()).password(t.getPassword()).build();
 	}
 
 }
