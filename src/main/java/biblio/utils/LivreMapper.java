@@ -7,13 +7,16 @@ public class LivreMapper implements IMapper<LivreDTO, Livre> {
 
 	@Override
 	public LivreDTO convertToDto(Livre entity) {
-		return LivreDTO.builder().id(entity.getId()).titre(entity.getTitre()).label(entity.getLabel()).date_edition(entity.getDate_edition()).stock(entity.getStock()).prix(entity.getPrix()).categorie(new CategorieMapper().convertToDto(entity.getCategorie())).build();
+		return LivreDTO.builder().id(entity.getId()).titre(entity.getTitre()).label(entity.getLabel())
+				.date_edition(entity.getDate_edition()).stock(entity.getStock()).prix(entity.getPrix())
+				.categorie(new CategorieMapper().convertToDto(entity.getCategorie())).build();
 	}
 
 	@Override
-	public Livre convertToEntity(LivreDTO t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Livre convertToEntity(LivreDTO entity) {
+		return Livre.builder().id(entity.getId()).titre(entity.getTitre()).label(entity.getLabel())
+				.date_edition(entity.getDate_edition()).stock(entity.getStock()).prix(entity.getPrix())
+				.categorie(new CategorieMapper().convertToEntity(entity.getCategorie())).build();
 	}
 
 }
