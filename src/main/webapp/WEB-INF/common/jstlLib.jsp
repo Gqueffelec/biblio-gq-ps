@@ -13,12 +13,11 @@ charset=UTF-8"
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
-<script src="https://use.fontawesome.com/releases/v5.15.2/js/all.js"
-	data-auto-replace-svg="nest"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<c:url value="" var="accueil"></c:url>
+		<c:url value="/" var="accueil"></c:url>
 		<a class="navbar-brand" href="${accueil }">Bibliothèque</a>
 
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -69,7 +68,7 @@ charset=UTF-8"
 			<ul class="navbar-nav">
 				<c:choose>
 					<c:when test="${sessionScope.connect }">
-						<c:url value="accueil?signOut=true" var="signOut">
+						<c:url value="signOut" var="signOut">
 						</c:url>
 						<li class="nav-item"><a class="nav-link disabled"
 							href="${signOut }">Deconnexion</a></li>
