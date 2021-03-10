@@ -23,7 +23,6 @@ import biblio.dto.LivreDTO;
 import biblio.service.impl.CategorieService;
 import biblio.service.impl.LivreService;
 
-@WebServlet("/livreServlet")
 public class LivreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
