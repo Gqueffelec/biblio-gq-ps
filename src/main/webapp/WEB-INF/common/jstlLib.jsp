@@ -28,39 +28,41 @@ charset=UTF-8"
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 			<ul class="navbar-nav">
-			<c:if test="${sessionScope.admin }">
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navBarDropdownLivre"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion
-						des Livres </a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
-							type="button" data-toggle="modal" data-target="#newLivre"
-							id="newLivreButton">Ajouter un livre</button>
-						<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
-							type="button" data-toggle="modal" data-target="#updateLivre"
-							id="updateLivreButton">Modifier un livre</button>
-						<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
-							type="button" data-toggle="modal" data-target="#removeLivre"
-							id="removeLivreButton">Supprimer un livre</button>
-					</div></li>
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#"
-					id="navBarDropdownCategorie" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false">Gestion des
-						Catégories </a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-						<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
-							type="button" data-toggle="modal" data-target="#newCategorie"
-							id="newCategorieButton">Ajouter une catégorie</button>
-						<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
-							type="button" data-toggle="modal" data-target="#updateCategorie"
-							id="updateCategorieButton">Modifier une catégorie</button>
-						<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
-							type="button" data-toggle="modal" data-target="#removeCategorie"
-							id="removeCategorieButton">Supprimer une catégorie</button>
-					</div></li>
-			</c:if>
+				<c:if test="${sessionScope.admin }">
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" id="navBarDropdownLivre"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestion
+							des Livres </a>
+						<div class="dropdown-menu"
+							aria-labelledby="navbarDropdownMenuLink">
+							<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
+								type="button" data-toggle="modal" data-target="#newLivre"
+								id="newLivreButton">Ajouter un livre</button>
+							<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
+								type="button" data-toggle="modal" data-target="#updateLivre"
+								id="updateLivreButton">Modifier un livre</button>
+							<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
+								type="button" data-toggle="modal" data-target="#removeLivre"
+								id="removeLivreButton">Supprimer un livre</button>
+						</div></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#"
+						id="navBarDropdownCategorie" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">Gestion des
+							Catégories </a>
+						<div class="dropdown-menu"
+							aria-labelledby="navbarDropdownMenuLink">
+							<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
+								type="button" data-toggle="modal" data-target="#newCategorie"
+								id="newCategorieButton">Ajouter une catégorie</button>
+							<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
+								type="button" data-toggle="modal" data-target="#updateCategorie"
+								id="updateCategorieButton">Modifier une catégorie</button>
+							<button class="btn btn-outline-success ml-5 my-2 my-sm-0"
+								type="button" data-toggle="modal" data-target="#removeCategorie"
+								id="removeCategorieButton">Supprimer une catégorie</button>
+						</div></li>
+				</c:if>
 			</ul>
 		</div>
 		<div class="flex-lg-column">
@@ -73,10 +75,10 @@ charset=UTF-8"
 							href="${signOut }">Deconnexion</a></li>
 					</c:when>
 					<c:otherwise>
-					<li class="nav-item"><c:url value="signIn" var="signIn">
-						</c:url> <a class="nav-link disabled" href="${signIn }">Inscription</a></li>
-					<li class="nav-item"><c:url value="login" var="login">
-						</c:url> <a class="nav-link" href="${login }">Login</a></li>
+						<li class="nav-item"><c:url value="signIn" var="signIn">
+							</c:url> <a class="nav-link disabled" href="${signIn }">Inscription</a></li>
+						<li class="nav-item"><c:url value="login" var="login">
+							</c:url> <a class="nav-link" href="${login }">Login</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -189,7 +191,7 @@ charset=UTF-8"
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="/temp-name/livreServlet?action=create" method="post">
+					<form action="addLivre" method="post">
 						<div id="createLivreData">
 							<div>
 								<label for="categorie">Categorie : </label> <select
@@ -251,11 +253,11 @@ charset=UTF-8"
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="/temp-name/livreServlet?action=update" method="post">
+					<form action="updateLivre" method="post">
 						<div id="updateLivreData">
 							<div>
 								<select name="livre">
-									<c:forEach items="${livreList }" var="livre">
+									<c:forEach items="${listeLivre }" var="livre">
 										<option value="${livre.id}">${livre.titre}</option>
 									</c:forEach>
 								</select>
@@ -298,11 +300,11 @@ charset=UTF-8"
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="/temp-name/livreServlet?action=remove" method="post">
+					<form action="removeLivre" method="post">
 						<div id="removeLivreData">
 							<div>
 								<select name="livre">
-									<c:forEach items="${livreList }" var="livre">
+									<c:forEach items="${listeLivre }" var="livre">
 										<option value="${livre.id}">${livre.titre}</option>
 									</c:forEach>
 								</select>
