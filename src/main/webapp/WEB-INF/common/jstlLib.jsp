@@ -256,7 +256,7 @@ charset=UTF-8"
 						<div id="updateLivreData">
 							<div>
 								<select name="livre">
-									<c:forEach items="${listeLivre }" var="livre">
+									<c:forEach items="${livreList}" var="livre">
 										<option value="${livre.id}">${livre.titre}</option>
 									</c:forEach>
 								</select>
@@ -303,7 +303,7 @@ charset=UTF-8"
 						<div id="removeLivreData">
 							<div>
 								<select name="livre">
-									<c:forEach items="${listeLivre }" var="livre">
+									<c:forEach items="${livreList }" var="livre">
 										<option value="${livre.id}">${livre.titre}</option>
 									</c:forEach>
 								</select>
