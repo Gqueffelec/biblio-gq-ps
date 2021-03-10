@@ -3,14 +3,9 @@ package biblio.controller;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,15 +21,6 @@ public class LivreController {
 	LivreService livreService;
 	@Autowired
 	CategorieService categorieService;
-
-	@GetMapping({ "/", "/index" })
-	public String listes(ModelMap model) {
-		List<LivreDTO> listeLivre = this.livreService.getAll();
-		List<CategorieDTO> listeCategorie = this.categorieService.getAll();
-		model.addAttribute("listeLivre", listeLivre);
-		model.addAttribute("listeCategorie", listeCategorie);
-		return "index";
-	}
 
 	@PostMapping("/addLivre")
 	public String add(@RequestParam("categorie") String categorieS, @RequestParam("stock") String stockS,

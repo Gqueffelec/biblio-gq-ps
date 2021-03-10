@@ -37,7 +37,7 @@ public class LoginController {
 			if (loginUser != null) {
 				session.setAttribute("connect", true);
 				session.setAttribute("admin", loginUser.isAdmin());
-				return "index";
+				return "redirect:index";
 			} else {
 				model.addAttribute("error", error);
 			}
