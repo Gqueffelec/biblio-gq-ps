@@ -6,13 +6,13 @@ import javax.crypto.spec.PBEKeySpec;
 
 public class Password {
 
-	private static String sel = "Coup2Sel";
+	private static String sel = "lEsElCbOn!";
 	private static int iterations = 10000;
 	private static int keyLength = 512;
 	private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
 	public static void main(String[] args) {
-		System.out.println(getHash("azerty"));
+		System.out.println(getHash("azegggeggrty"));
 
 	}
 

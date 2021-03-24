@@ -15,13 +15,13 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+
 import biblio.dao.UserDAO;
 import biblio.dto.CategorieDTO;
 import biblio.dto.LivreDTO;
 import biblio.model.User;
 import biblio.service.impl.CategorieService;
 import biblio.service.impl.LivreService;
-import biblio.utils.Password;
 
 
 //@WebServlet("/accueil")
@@ -42,7 +42,7 @@ public class AccueilServlet extends HttpServlet {
 		final AutowireCapableBeanFactory beanFactory = springContext.getAutowireCapableBeanFactory();
 		beanFactory.autowireBean(this);
 		if (userDao.getById(1) == null) {
-			User admin = User.builder().name("libraire").password(Password.getHash("admin")).admin(true).build();
+			User admin = User.builder().name("libraire").password(biblio.utils.Password.getHash("admin")).admin(true).build();
 			userDao.create(admin);
 		}
 	}

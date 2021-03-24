@@ -53,10 +53,10 @@ public class CategorieController {
 		try {
 			id = Integer.parseInt(idStr);
 		} catch (NumberFormatException nfe) {
-			return "L'ID doit être un nombre";
+			return "L'ID doit ï¿½tre un nombre";
 		}
 		categorieService.deleteById(id);
-		return "Catégorie supprimée avec succès";
+		return "Catï¿½gorie supprimï¿½e avec succï¿½s";
 	}
 
 	@GetMapping("createCategorie")
@@ -67,13 +67,13 @@ public class CategorieController {
 		}
 		List<CategorieDTO> listeTemp = categorieService.getAll();
 		if (listeTemp.stream().anyMatch(e -> e.getNom().equalsIgnoreCase(nom))) {
-			return "Ce nom éxiste déjà";
+			return "Ce nom ï¿½xiste dï¿½jï¿½";
 		}
 		if (listeTemp.stream().anyMatch(e -> e.getLabel().equalsIgnoreCase(label))) {
-			return "Ce label éxiste déjà";
+			return "Ce label ï¿½xiste dï¿½jï¿½";
 		}
 		categorieService.add(CategorieDTO.builder().nom(nom).label(label).information_technique(info).build());
-		return "Catégorie ajoutée";
+		return "Catï¿½gorie ajoutï¿½e";
 	}
 
 	@GetMapping("updateCategorie")
@@ -86,14 +86,14 @@ public class CategorieController {
 		try {
 			id = Integer.parseInt(idStr);
 			if (id < 1) {
-				return "L'id doit être positif";
+				return "L'id doit ï¿½tre positif";
 			}
 		} catch (NumberFormatException nfe) {
-			return "L'id doit être un nombre";
+			return "L'id doit ï¿½tre un nombre";
 		}
 		categorieService.update(CategorieDTO.builder().id(id).nom(nom).label(label)
 				.information_technique(info).build());
-		return "Catégorie modifiée";
+		return "Catï¿½gorie modifiï¿½e";
 	}
 
 }

@@ -6,7 +6,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import biblio.dto.UserDTO;
 import biblio.service.impl.UserService;
 import biblio.utils.Password;
@@ -16,7 +15,7 @@ public class InscriptionController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@GetMapping("/signIn")
 	public String getPage() {
 		return "inscription";
@@ -31,7 +30,7 @@ public class InscriptionController {
 		} else {
 			if (password.equals(password2)) {
 				if (this.userService.getAll().stream().anyMatch(e -> e.getName().equals(user))) {
-					error = "Ce nom est déjà utilisé";
+					error = "Ce nom est dÃ©jÃ  utilisÃ©";
 				} else {
 					UserDTO temp = UserDTO.builder().name(user).admin(false).password(Password.getHash(password))
 							.build();
